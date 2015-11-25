@@ -1,0 +1,135 @@
+{
+  "_environment": 2891,
+  "_equipped": null,
+  "_equipped_to": null,
+  "_equips_to": null,
+  "_room_vnum": null,
+  "affected": [
+    {
+      "bitvector": 0,
+      "duration": -1,
+      "level": 20,
+      "location": 26,
+      "modifier": 3,
+      "timer": 0,
+      "type": -1,
+      "valid": true,
+      "where": 1
+    },
+    {
+      "__class__/handler_game.AFFECT_DATA": {
+        "bitvector": 0,
+        "duration": -1,
+        "level": 20,
+        "location": 13,
+        "modifier": 110,
+        "timer": 0,
+        "type": -1,
+        "valid": true,
+        "where": 1
+      }
+    },
+    {
+      "__class__/handler_game.AFFECT_DATA": {
+        "bitvector": 0,
+        "duration": -1,
+        "level": 20,
+        "location": 20,
+        "modifier": -5,
+        "timer": 0,
+        "type": -1,
+        "valid": true,
+        "where": 1
+      }
+    },
+    {
+      "__class__/handler_game.AFFECT_DATA": {
+        "bitvector": 0,
+        "duration": -1,
+        "level": 20,
+        "location": 19,
+        "modifier": 5,
+        "timer": 0,
+        "type": -1,
+        "valid": true,
+        "where": 1
+      }
+    },
+    {
+      "__class__/handler_game.AFFECT_DATA": {
+        "bitvector": 0,
+        "duration": -1,
+        "level": 20,
+        "location": 28,
+        "modifier": 4,
+        "timer": 0,
+        "type": -1,
+        "valid": true,
+        "where": 1
+      }
+    }
+  ],
+  "area": "Bits and Bytes",
+  "available_light": 0,
+  "carry_number": 0,
+  "carry_weight": 0,
+  "condition": 100,
+  "cost": 2500,
+  "count": 0,
+  "description": "A pair of gauntlets lie here, pulsating against the ground violently.",
+  "enchanted": false,
+  "extra_descr": [],
+  "flags": {
+    "__class__/item_flags.ItemFlags": {
+      "equips_to": {
+        "__type__/set": [
+          "hands"
+        ]
+      },
+      "item_attributes": {
+        "__type__/set": [
+          "non_metal",
+          "hum",
+          "take"
+        ]
+      },
+      "item_restrictions": {
+        "__type__/set": []
+      },
+      "weapon_attributes": {
+        "__type__/set": []
+      }
+    }
+  },
+  "instance_id": 2892,
+  "inventory": [],
+  "is_area": false,
+  "is_item": true,
+  "is_living": false,
+  "is_room": false,
+  "item_type": "armor",
+  "level": 30,
+  "long_descr": "",
+  "material": "unknown",
+  "name": "Shockwave Gauntlets",
+  "new_format": true,
+  "on": null,
+  "owner": "",
+  "reset_num": 0,
+  "short_descr": "{x{ Shockwave Gauntlets",
+  "size": 0,
+  "timer": 0,
+  "valid": false,
+  "value": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "vnum": 27900,
+  "was_in_room": null,
+  "weight": 0,
+  "zone": 0,
+  "zone_template": ""
+}

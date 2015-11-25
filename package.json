@@ -1,0 +1,29 @@
+{
+  "name": "sliki",
+  "version": "1.0.0",
+  "description": "The slick storage-linked wiki.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Polatrite/sliki.git"
+  },
+  "keywords": [
+    "wiki",
+    "database",
+    "markdown"
+  ],
+  "author": "Daniel Eichler (Polatrite)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Polatrite/sliki/issues"
+  },
+  "homepage": "https://github.com/Polatrite/sliki#readme",
+  "dependencies": {
+    "config": "^1.17.1",
+    "express": "^4.13.3",
+    "underscore": "^1.8.3"
+  }
+}

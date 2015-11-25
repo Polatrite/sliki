@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>Sliki Editor</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../shared/main.css" rel="stylesheet">
+</head>
+
+<body class="container-fluid">
+
+<input placeholder="Page title" />
+<section class="row">
+    <div class="well">
+        <textarea class="col-md-6 full-height" id="pad" placeholder="Write your wiki page..."></textarea>
+        <div class="col-md-6 full-height" id="markdown"></div>
+    </div>
+</section>
+<div style="position: absolute; right: 0px; bottom: 0px; padding: 24px;">
+    <button class="btn btn-default">Cancel</button>
+    <button class="btn btn-primary">Save</button>
+</div>
+
+<script src="https://cdn.rawgit.com/showdownjs/showdown/1.0.2/dist/showdown.min.js"></script>
+<script src="editor.js"></script>
+
+</body>
+</html>
