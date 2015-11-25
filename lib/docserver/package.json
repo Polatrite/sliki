@@ -1,0 +1,91 @@
+{
+  "_args": [
+    [
+      "docserver",
+      "c:\\dev\\sliki"
+    ]
+  ],
+  "_from": "docserver@latest",
+  "_id": "docserver@0.1.4",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/docserver",
+  "_npmUser": {
+    "email": "nate@natesilva.com",
+    "name": "natevancouver"
+  },
+  "_npmVersion": "1.1.69",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "docserver",
+    "raw": "docserver",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/docserver/-/docserver-0.1.4.tgz",
+  "_shasum": "0431c8bba48adb22c3d1f666ae74cb962919d97a",
+  "_shrinkwrap": null,
+  "_spec": "docserver",
+  "_where": "c:\\dev\\sliki",
+  "author": {
+    "email": "nate@natesilva.com",
+    "name": "Nate Silva",
+    "url": "http://natesilva.com/"
+  },
+  "bin": {
+    "docserver": "./bin/serve.js"
+  },
+  "bugs": {
+    "url": "https://github.com/natesilva/node-docserver/issues"
+  },
+  "dependencies": {
+    "async": "~0.1.22",
+    "marked": "~0.3.5",
+    "mime": "~1.2.7",
+    "object-resolve-path": "^1.1.0"
+  },
+  "description": "Serve Markdown documents as static content (middleware)",
+  "devDependencies": {
+    "connect": "~2.4.6",
+    "redis": "~0.8.1",
+    "tap": "~0.3.1",
+    "union": "~0.3.4"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "0431c8bba48adb22c3d1f666ae74cb962919d97a",
+    "tarball": "http://registry.npmjs.org/docserver/-/docserver-0.1.4.tgz"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "homepage": "https://github.com/natesilva/node-docserver",
+  "keywords": [
+    "markdown",
+    "middleware",
+    "server",
+    "static",
+    "web"
+  ],
+  "main": "./lib/docserver.js",
+  "maintainers": [
+    {
+      "name": "natevancouver",
+      "email": "nate@natesilva.com"
+    }
+  ],
+  "name": "docserver",
+  "optionalDependencies": {},
+  "readme": "# node-docserver\n\nServes Markdown documents as static content. Acts as middleware for Connect (Express) and Union (Flatiron).\n\nUse this to serve a folder full of Markdown documents (and its sub-folders) as though they were static content.\n\n## Installation\n\n```\nnpm install docserver\n```\n\n## Features\n\n* Handles Github-Flavored Markdown, using the `marked` package.\n* Per-directory template support.\n* In-memory caching that can easily be replaced by a custom cache module (e.g., Redis)\n* Can handle requests for an entire site, or just one subdirectory of a site.\n* Command-line utility serves the current directory for quick and easy local documentation browsing.\n\n# Example\n\nSee Connect, Union, plain, and Redis examples in the `examples` and `bin` subdirectories.\n\n## Using Express\n\n``` js\nvar express = require('express')\n  , docserver = require('docserver')\n  ;\n\nvar app = express();\napp.use(docserver({\n  dir: __dirname + '/docs',  // serve Markdown files in the docs directory...\n  url: '/'}                  // ...and serve them at the root of the site\n));\napp.listen(3000);\n\nconsole.log(docserver.version + ' listening on port 3000');\n```\n\n# Mapping of URLs to Markdown files\n\nPlace Markdown files with the extensions `.md` or `.mdown` in your docs directory. (You can override these file extensions; see below for details.) Organize the directory any way you like, with any number of subdirectories.\n\nEach directory can have an `index.md` (or `index.mdown`) file that will be served if the user requests the directory name.\n\n# Template support\n\nA `template.html` file, if present in the same directory as a Markdown document, will be used to format that document. You can have multiple templates: `docserver` will search parent directories up the directory tree to find the nearest `template.html` and use that.\n\nThis allows you to have a default template, and override with custom templates in each subdirectory.\n\n## Template syntax\n\n#### {{{ title }}}\n\nIn `template.html`, the text `{{{ title }}}` will be replaced by the current document’s title. The title is guessed by taking the contents of the first non-empty HTML tag from the rendered HTML. In other words, since most people usually start their Markdown documents with an &lt;h1&gt; tag, that tag’s contents become the title.\n\n#### {{{ markdown }}}\n\nIn `template.html`, the text `{{{ markdown }}}` will be replaced by the HTML that was rendered from the Markdown document.\n\n### Example template\n\n``` html\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <title>{{{ title }}}</title>\n</head>\n<body>\n{{{ markdown }}}\n</body>\n</html>\n```\n\n# Directory structure example\nFor this example, assume the following directory structure:\n\n```\ndocs/\n├── index.md\n├── README.md\n├── template.html\n└── api/\n    ├── index.md\n    ├── template.html\n    └── v1.0/\n        └── index.md\n```\n\n## Example URLs\n\nGiven the “Using Express” example code and the directory structure shown above, a request for `http://localhost:3000/` would return `docs/index.md` (converted to HTML, of course).\n\nFile extensions are handled automatically. In this example, the README file can be requested as `http://localhost:3000/README` or `http://localhost:3000/README.md`.\n\nLikewise, the `api/index.md` file can be requested as `http://localhost:3000/api/`, `http://localhost:3000/api/index.md`, or even `http://localhost:3000/api/index`.\n\n## Example Templates\n\nThe file `docs/index.md` is served using the template file `docs/template.html`.\n\nThe file `docs/api/index.md` would be served using the template file `docs/api/template.html`.\n\nThe file `docs/api/v1.0/index.md` is in a directory that does not have a template file. In this case, `docserver` will search up the directory tree until it finds a template. This file would be served using the template file `docs/api/template.html`.\n\n(If `docserver` can find no template for a document, it will be served as a bare-bones HTML file.)\n\n# API\n\n## docserver(options)\n\nReturns the `docserver` middleware, which is compatible with Connect, Express, Union and Flatiron.\n\n### Options when creating an instance of the docserver middleware\n\n#### dir\n\nThe directory where your Markdown documents are located.\n\nexample: `{ dir: __dirname + '/docs' }`\n\n#### url\n\nThe URL from which your documents should be served.\n\nexample (`docserver` handles the root level of the web site): `{ url: '/' }`\n\nexample (`docsever` handles URLs under `/docs`): `{ url: '/docs/' }`\n\n#### extensions\n\nMarkdown files with these extensons will be served.\n\nexample: `{extensions: ['.markdown', '.md']}`\n\n> Defaults to `['.md', '.mdown']`\n\n#### passthrough\n\nFiles with these extensions will be served as-is. This allows you to place non-Markdown files, such as CSS, images, and other assets, side-by-side with your Markdown documents.\n\nexample: `{passthrough: ['.css', '.js', '.png', '.txt']}`\n\n> Defaults to `['.css', '.png', '.jpg', '.jpeg', '.js']`\n\n#### headers\n\nAdd additional HTTP headers to the output.\n\nexample: `{headers: {'Cache-Control': 'public,max-age=3600'}}`\n\n#### cache\n\nOverride the caching subsystem. The default uses an in-memory cache.\n\nTo disable caching, set this to `false`. (You must use `false`. “Falsy” values like `0` or `undefined` will not work.)\n \nNo other subsystems are provided, but there is an example using Redis in the `examples` subdirectory.\n\nexample: `{cache: YourCacheClass}`\n\n#### watch\n\nIf `true`, `docserver` will watch your documents `dir` for changes. If any files are added, removed, or changed, the cache will be flushed.\n\nThis means you do not have to restart the server if you change any of your documents or templates.\n\nThis feature is experimental and **off** by default.\n\nexample: `{watch: true}`\n\n> Defaults to `false`\n\n# Error documents\n\nWhen an HTTP error occurs, `docserver` will look for a document matching the error number, using the same logic that is used to find templates. Currently only `404` errors are supported this way.\n\nFor example, to have a custom `404` error page, create a `404.md` file. It will be converted to HTML and served using `template.html` just like any other Markdown file would be.\n\nLike templates, you can have custom `404.md` error documents in each subdirectory and `docserver` will use the nearest one when serving an error.\n\n# FAQ\n\n## Q: How do I add a Cache-Control header?\n\nUse the `headers` option:\n\n```\nvar middleware = docserver({\n\theaders: {'Cache-Control': 'public,max-age=3600'},\n\t// other options…\n});\n```\n\n## Q: I updated one of my Markdown documents, but `docserver` is still showing the old version.\n\nThe old version of the document is cached, either by `docserver` or by your web browser.\n\nIf you used a `Cache-Control` header, the document may be cached by your web browser. Hit <kbd>F5</kbd> (or <kbd>Cmd-R</kbd>, or <kbd>Ctrl-R</kbd>) a couple of times to refresh.\n\nIf you still see the old document, then it’s been cached by `docserver`. Your options are:\n\n* restart `docserver`\n* or, disable server-side caching by passing `false` as the `cache` option\n* or, use the experimental `watch` option so that `docserver` will automatically notice any changes\n\n## Q: How does the cache work?\n\n`docserver` aggressively caches the rendered, HTML form of your documents.\n\nThe first time a document is requested, `docserver` has to read it from disk (along with any template) and render it to HTML. On subsequent requests for the same document, it will be served from cache, which should be extremely fast.\n\nIn addition, requests that result in a `404` error are cached, so once `docserver` searches for a document and doesn’t find it, it won’t waste time looking for that document again.\n\nBy default, once a document is cached, `docserver` will never re-read that document; the cached version will always be served until you reload the server.\n\nYou also have the option to disable caching by passing `false` as the `cache` option.\n\nIf you enable the experimental `watch` option, the cache is emptied every time a change is detected in your `docs` directory or any of its subdirectories. Because it may be resource-intensive, this option is turned off by default. Enabling it when you have a large set of documents or subdirectories may exhaust available file handles. If you only have a few documents or subdirectories, feel free to try it out. Contributions to improve this feature are welcome.\n\n## Q: How does the CLI (command-line interface) work?\n\nTo serve the current directory, just type `docserver`. (This assumes you had installed `docserver` globally by passing the `-g` option to `npm install`.)\n\nThe CLI takes two arguments, the local filesystem directory to serve, and the port number on which to listen:\n\n```\ndocserver [dir] [port]\n```\n\nThe command-line interface is not intended as a production web server. Rather, it’s a quick way to read local folders containing documentation.",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/natesilva/node-docserver.git"
+  },
+  "version": "0.1.4"
+}
